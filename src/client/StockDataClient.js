@@ -1,6 +1,8 @@
 const axios = require('axios')
+
 const config = require('../config')
 const parseStockInfoResponse = require('./parsers/parseStockInfoResponse')
+const parseQueryResponse = require('./parsers/parseQueryResponse')
 
 class StockDataClient {
   constructor() {
@@ -20,7 +22,23 @@ class StockDataClient {
 
     const parsed = parseStockInfoResponse(response.data)
 
-    console.log(parsed)
+    return parsed
+  }
+
+  async fetchQueryAnswers(query, numAnswers = 5) {
+    const params = {
+      q: query,
+      quotesCount: numAnswers,
+      newsCount: 0,
+      enableFuzzyQuery: false,
+      enableEnhancedTrivialQuery: true,
+    }
+
+    const response = await this.client.get('v1/finance/search', { params })
+
+    const parsed = parseQueryResponse(response.data)
+
+    return parsed
   }
 }
 
