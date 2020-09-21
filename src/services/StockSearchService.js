@@ -1,7 +1,7 @@
 class StockSearchService {
-  constructor(client, cache) {
-    this.client = client
-    this.cache = cache
+  constructor({ stockDataClient, stockDataCache }) {
+    this.client = stockDataClient
+    this.cache = stockDataCache
   }
 
   async execute({ query }) {
