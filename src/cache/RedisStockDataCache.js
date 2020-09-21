@@ -1,20 +1,8 @@
-const cacheManager = require('cache-manager')
-const redisStore = require('cache-manager-redis')
-
 const config = require('../config')
 
 class RedisStockDataCache {
-  constructor() {
-    this.cache = cacheManager.caching({
-      store: redisStore,
-      db: config.cache.DB,
-      port: config.cache.PORT,
-    })
-
-    this.cache.store.events.on('redisError', error => {
-      console.log(error)
-      throw new Error(error)
-    })
+  constructor({ cacheConnection }) {
+    this.cache = cacheConnection
   }
 
   async set(ticker, data, { ttl } = {}) {
