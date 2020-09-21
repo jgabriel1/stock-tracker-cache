@@ -11,7 +11,7 @@ class FakeStockDataClient {
   async fetchQueryAnswers(query, numAnswers = 5) {
     const answers = []
 
-    while (answers.length <= numAnswers)
+    while (answers.length < numAnswers)
       answers.push({
         exchange: 'Fake',
         symbol: 'TST.SA',
