@@ -1,7 +1,7 @@
 class StockInfoService {
-  constructor(client, cache) {
-    this.client = client
-    this.cache = cache
+  constructor({ stockDataClient, stockDataCache }) {
+    this.client = stockDataClient
+    this.cache = stockDataCache
   }
 
   async execute({ tickers }) {
@@ -10,15 +10,17 @@ class StockInfoService {
     const results = {}
     const unavailable = []
 
-    tickers.forEach(ticker => {
-      const cachedResponse = this.cache.get(ticker)
+    await Promise.all(
+      tickers.map(async ticker => {
+        const cachedResponse = await this.cache.get(ticker)
 
-      if (cachedResponse) {
-        Object.assign(results, { [ticker]: cachedResponse })
-      } else {
-        unavailable.push(ticker)
-      }
-    })
+        if (cachedResponse) {
+          Object.assign(results, { [ticker]: cachedResponse })
+        } else {
+          unavailable.push(ticker)
+        }
+      }),
+    )
 
     // 2 - Send the array with unavailable data to the client to make the request.
     const remainingStockInfos = await this.client.fetchStockInfo(unavailable)
