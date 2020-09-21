@@ -7,6 +7,10 @@ class StockDataClient {
   }
 
   async fetchStockInfo(tickers) {
+    if (tickers.length === 0) {
+      return []
+    }
+
     const params = {
       symbols: tickers.join(','),
       range: '1d',
