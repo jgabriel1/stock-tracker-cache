@@ -1,8 +1,10 @@
+const clientInstanceFactory = require('./clientInstanceFactory')
 const StockDataClient = require('./StockDataClient')
 
 describe('StockDataClient', () => {
   it('should fetch stock info and parse it to the correct format', async () => {
-    const client = new StockDataClient()
+    const clientInstance = clientInstanceFactory()
+    const client = new StockDataClient({ clientInstance })
 
     const data = await client.fetchStockInfo(['AAPL', 'TSLA'])
 
@@ -17,7 +19,8 @@ describe('StockDataClient', () => {
   }, 5000)
 
   it('should fetch stock query data and return in the correct format', async () => {
-    const client = new StockDataClient()
+    const clientInstance = clientInstanceFactory()
+    const client = new StockDataClient({ clientInstance })
 
     const data = await client.fetchQueryAnswers('apple')
 

@@ -1,14 +1,9 @@
-const axios = require('axios')
-
-const config = require('../config')
 const parseStockInfoResponse = require('./parsers/parseStockInfoResponse')
 const parseQueryResponse = require('./parsers/parseQueryResponse')
 
 class StockDataClient {
-  constructor() {
-    this.client = axios.create({
-      baseURL: config.BASE_URL,
-    })
+  constructor({ clientInstance }) {
+    this.client = clientInstance
   }
 
   async fetchStockInfo(tickers) {
