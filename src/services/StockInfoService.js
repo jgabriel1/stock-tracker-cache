@@ -20,7 +20,7 @@ class StockInfoService {
           unavailable.push(ticker)
         }
       }),
-    )
+    ).catch(console.log)
 
     // 2 - Send the array with unavailable data to the client to make the request.
     const remainingStockInfos = await this.client.fetchStockInfo(unavailable)
@@ -28,6 +28,7 @@ class StockInfoService {
     remainingStockInfos.forEach(info => {
       Object.assign(results, { [info.symbol]: info })
     })
+
     // 3 - store the new responses in the cache
     Promise.allSettled(
       remainingStockInfos.map(info => this.cache.set(info.symbol, info)),
