@@ -1,7 +1,12 @@
 const express = require('express')
+
 const container = require('./container')
+const errorHandler = require('./errors/errorHandler')
 
 const app = express()
+
+app.use(express.json())
+app.use(errorHandler)
 
 app.get('/info', async (request, response) => {
   const { tickers } = request.query
