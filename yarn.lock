@@ -1026,6 +1026,11 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
+cache-manager-memory-store@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/cache-manager-memory-store/-/cache-manager-memory-store-1.1.0.tgz#a67b4ee5c1de3562b443747835a9cce721fdd001"
+  integrity sha1-pntO5cHeNWK0Q3R4NanM5yH90AE=
+
 cache-manager-redis@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/cache-manager-redis/-/cache-manager-redis-0.6.0.tgz#b364b8e855b287edae1b07780addb9bc9860ebce"
@@ -4186,7 +4191,7 @@ redis-url@^1.2.1:
   dependencies:
     redis ">= 0.0.1"
 
-"redis@>= 0.0.1", "redis@>= 2.6.2":
+"redis@>= 0.0.1", "redis@>= 2.6.2", redis@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/redis/-/redis-3.0.2.tgz#bd47067b8a4a3e6a2e556e57f71cc82c7360150a"
   integrity sha512-PNhLCrjU6vKVuMOyFu7oSP296mwBkcE6lrAjruBYG5LgdSqtRBoVQIylrMyVZD/lkF24RSNNatzvYag6HRBHjQ==
