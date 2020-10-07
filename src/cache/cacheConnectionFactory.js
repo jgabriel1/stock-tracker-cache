@@ -1,6 +1,5 @@
 const cacheManager = require('cache-manager')
 const redisStore = require('cache-manager-redis')
-// const memoryStore = require('cache-manager-memory-store')
 
 const redis = require('redis')
 
@@ -19,24 +18,18 @@ function cacheConnectionFactory() {
       port: config.cache.PORT,
     })
 
+    console.log('Using Redis Cache.')
+
     return cache
   }
 
   testClient.end(false)
 
-  // console.log('Redis cache unavailable. Using memory cache instead.')
-
-  // const cache = cacheManager.caching({
-  //   store: memoryStore,
-  // })
+  console.log('Cache NOT enabled.')
 
   return {
-    set(...args) {
-      return null
-    },
-    get(...args) {
-      return null
-    },
+    set: (...args) => null,
+    get: (...args) => null,
   }
 }
 
