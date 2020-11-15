@@ -2,6 +2,10 @@
 import ICacheProvider from '../models/ICacheProvider';
 
 class UselessCacheProvider implements ICacheProvider {
+  constructor() {
+    console.log('Cache disabled.');
+  }
+
   public async set(...args: any[]): Promise<void> {
     return;
   }
