@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
-import container from '../container';
-import StockSearchService from '../services/StockSearchService';
+import container from '../../container';
+import StockSearchService from '../../services/StockSearchService';
 
 class StockSearchController {
   public async index(request: Request, response: Response): Promise<Response> {
