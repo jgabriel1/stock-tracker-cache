@@ -6,7 +6,8 @@ import ICacheProvider from './providers/CacheProvider/models/ICacheProvider';
 import StockDataClientProvider from './providers/StockDataClientProvider';
 import IStockDataClientProvider from './providers/StockDataClientProvider/models/IStockDataClientProvider';
 
-import { StockInfoService, StockSearchService } from './services';
+import StockInfoService from './services/StockInfoService';
+import StockSearchService from './services/StockSearchService';
 
 const container = createContainer();
 
