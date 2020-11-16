@@ -29,16 +29,21 @@ class StockInfoService {
   }
 
   public async execute({ tickers }: IRequest): Promise<IResponse> {
-    // 1 - Check the cache for any stored values for the requested tickers
+    const results = new Map<string, IStockInfoDTO>();
     const unavailableTickers: string[] = [];
 
-    const stocksInfo = await this.cache.getMany<IStockInfoDTO>(
+    // 1 - Check the cache for any stored values for the requested tickers
+    const storedStocksInfo = await this.cache.getMany<IStockInfoDTO>(
       tickers.map(ticker => `info:${ticker}`),
     );
 
-    stocksInfo.forEach((storedData, ticker) => {
+    tickers.forEach(ticker => {
+      const storedData = storedStocksInfo.get(`info:${ticker}`);
+
       if (!storedData) {
         unavailableTickers.push(ticker);
+      } else {
+        results.set(ticker, storedData);
       }
     });
 
@@ -48,7 +53,7 @@ class StockInfoService {
     );
 
     fetchedStockInfos.forEach(info => {
-      stocksInfo.set(info.symbol, info);
+      results.set(info.symbol, info);
     });
 
     // 3 - store the new responses in the cache
@@ -58,7 +63,7 @@ class StockInfoService {
       ),
     ).catch(console.log);
 
-    return Object.fromEntries(stocksInfo) as IResponse;
+    return Object.fromEntries(results);
   }
 }
 
