@@ -1,7 +1,8 @@
 {
   "env": {
     "es6": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": [
     "airbnb-base",
@@ -29,13 +30,14 @@
     "no-useless-constructor": "off",
     "no-underscore-dangle": "off",
     "@typescript-eslint/no-unused-vars": ["error", {
-      "argsIgnorePattern": "_"
+      "argsIgnorePattern": "(args)|(_)"
     }],
     "import/extensions": [
       "error",
       "ignorePackages",
       {
-        "ts": "never"
+        "ts": "never",
+        "js": "never"
       }
     ]
   },
