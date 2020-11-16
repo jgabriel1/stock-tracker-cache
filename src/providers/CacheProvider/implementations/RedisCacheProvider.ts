@@ -30,6 +30,43 @@ class RedisCacheProvider implements ICacheProvider {
 
     return parsedValue;
   }
+
+  public async setMany(
+    data: Map<string, any>,
+    { ttlInSeconds } = { ttlInSeconds: 5 },
+  ): Promise<void> {
+    const dataEntries = Array.from(data.entries());
+
+    await Promise.allSettled(
+      dataEntries.map(async ([key, value]) => {
+        const stringifiedValue = JSON.stringify(value);
+
+        await this.cache.set(key, stringifiedValue, 'SETEX', ttlInSeconds);
+      }),
+    );
+  }
+
+  public async getMany<T = any>(
+    keys: string[],
+  ): Promise<Map<string, T | null>> {
+    const storedData = await this.cache.mget(keys);
+
+    const results = new Map<string, T | null>();
+
+    keys.forEach((key, index) => {
+      let parsedValue = null;
+
+      const storedValue = storedData[index];
+
+      if (storedValue) {
+        parsedValue = JSON.parse(storedValue) as T;
+      }
+
+      results.set(key, parsedValue);
+    });
+
+    return results;
+  }
 }
 
 export default RedisCacheProvider;

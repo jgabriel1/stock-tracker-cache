@@ -1,6 +1,7 @@
+import ICacheProvider from '../models/ICacheProvider';
 import ICacheProviderOptions from '../models/ICacheProviderOptions';
 
-class FakeCacheProvider {
+class FakeCacheProvider implements ICacheProvider {
   private cache: Map<string, string>;
 
   constructor() {
@@ -29,6 +30,29 @@ class FakeCacheProvider {
     }
 
     return null;
+  }
+
+  public async setMany(
+    data: Map<string, any>,
+    { ttlInSeconds }: ICacheProviderOptions,
+  ): Promise<void> {
+    data.forEach((value, key) => {
+      this.set(key, value, { ttlInSeconds });
+    });
+  }
+
+  public async getMany(keys: string[]): Promise<Map<string, any | null>> {
+    const storedValues = new Map<string, any | null>();
+
+    await Promise.all(
+      keys.map(async key => {
+        const storedValue = await this.get(key);
+
+        storedValues.set(key, storedValue);
+      }),
+    );
+
+    return storedValues;
   }
 }
 

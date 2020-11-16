@@ -13,6 +13,14 @@ class UselessCacheProvider implements ICacheProvider {
   public async get(...args: any[]): Promise<null> {
     return null;
   }
+
+  public async setMany(...args: any[]): Promise<void> {
+    return;
+  }
+
+  public async getMany(...args: any[]): Promise<Map<string, any>> {
+    return new Map();
+  }
 }
 
 export default UselessCacheProvider;
