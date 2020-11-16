@@ -5,6 +5,6 @@ export default interface IStockDataClientProvider {
   fetchStockInfo(tickers: string[]): Promise<IStockInfoDTO[]>;
   fetchQueryAnswers(
     query: string,
-    numAnswers: number,
+    numAnswers?: number,
   ): Promise<IStockQueryAnswerDTO[]>;
 }
