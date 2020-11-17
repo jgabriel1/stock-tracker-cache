@@ -8,6 +8,7 @@ import IStockDataClientProvider from './providers/StockDataClientProvider/models
 
 import StockInfoService from './services/StockInfoService';
 import StockSearchService from './services/StockSearchService';
+import StockChartDataService from './services/StockChartDataService';
 
 const container = createContainer();
 
@@ -25,6 +26,7 @@ container.register({
   // Services
   stockInfo: asClass(StockInfoService),
   stockSearch: asClass(StockSearchService),
+  stockChartData: asClass(StockChartDataService),
 });
 
 export default container;
