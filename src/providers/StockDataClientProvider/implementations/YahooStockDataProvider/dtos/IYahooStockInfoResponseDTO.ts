@@ -9,6 +9,14 @@ export default interface IYahooStockInfoResponseDTO {
             regularMarketPrice: number;
             chartPreviousClose: number;
           };
+          timestamp: number[];
+          indicators: {
+            quote: [
+              {
+                close: number[];
+              },
+            ];
+          };
         },
       ];
     }>;
