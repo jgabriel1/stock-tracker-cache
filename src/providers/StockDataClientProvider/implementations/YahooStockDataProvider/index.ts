@@ -3,10 +3,14 @@ import axios, { AxiosInstance } from 'axios';
 import HTTPException from '../../../../errors/HTTPException';
 import parseQueryResponse from './parsers/parseQueryResponse';
 import parseStockInfoResponse from './parsers/parseStockInfoResponse';
+import parseChartDataResponse from './parsers/parseChartDataResponse';
 
 import IStockDataClientProvider from '../../models/IStockDataClientProvider';
+import IFetchChartDataOptions from '../../models/IFetchChartDataOptions';
+
 import IStockInfoDTO from '../../../../dtos/IStockInfoDTO';
 import IStockQueryAnswerDTO from '../../../../dtos/IStockQueryAnswerDTO';
+import IStockChartDataDTO from '../../../../dtos/IStockChartDataDTO';
 
 import IYahooStockInfoResponseDTO from './dtos/IYahooStockInfoResponseDTO';
 import IYahooStockQueryResponseDTO from './dtos/IYahooStockQueryResponseDTO';
@@ -74,6 +78,34 @@ class YahooStockDataProvider implements IStockDataClientProvider {
 
     try {
       const parsed = parseQueryResponse(response.data);
+
+      return parsed;
+    } catch (error) {
+      throw new HTTPException('External api response format changed.', 500);
+    }
+  }
+
+  public async fetchChartData(
+    ticker: string,
+    { range, numberOfPoints }: IFetchChartDataOptions,
+  ): Promise<IStockChartDataDTO> {
+    const params = {
+      symbols: ticker,
+      range,
+      numberOfPoints,
+    };
+
+    const response = await this.client
+      .get<IYahooStockInfoResponseDTO>('v7/finance/spark', { params })
+      .catch(() => {
+        throw new HTTPException(
+          'Stock data service is currently unavailable.',
+          503,
+        );
+      });
+
+    try {
+      const parsed = parseChartDataResponse(response.data);
 
       return parsed;
     } catch (error) {
