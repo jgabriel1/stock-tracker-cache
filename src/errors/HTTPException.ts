@@ -1,7 +1,7 @@
 class HTTPException {
-  private message: string;
+  public message: string;
 
-  private statusCode: number;
+  public statusCode: number;
 
   constructor(message: string, statusCode = 400) {
     this.message = message;
