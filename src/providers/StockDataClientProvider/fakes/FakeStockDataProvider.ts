@@ -1,3 +1,4 @@
+import IStockChartDataDTO from '../../../dtos/IStockChartDataDTO';
 import IStockInfoDTO from '../../../dtos/IStockInfoDTO';
 import IStockQueryAnswerDTO from '../../../dtos/IStockQueryAnswerDTO';
 import IStockDataClientProvider from '../models/IStockDataClientProvider';
@@ -27,6 +28,17 @@ class FakeStockDataProvider implements IStockDataClientProvider {
       });
 
     return answers;
+  }
+
+  public async fetchChartData(
+    ticker: string,
+    { numberOfPoints, range: _ } = { range: '1d', numberOfPoints: 20 },
+  ): Promise<IStockChartDataDTO> {
+    return {
+      symbol: ticker,
+      timestamp: new Array(numberOfPoints).map(() => Date.now()),
+      close: new Array(numberOfPoints).map(() => 123),
+    };
   }
 }
 
